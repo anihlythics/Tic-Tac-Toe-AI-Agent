@@ -40,11 +40,11 @@ Required for OpenAI models:
 bash
 export OPENAI_API_KEY=***
 
-Optional for additional models:
-
-export ANTHROPIC_API_KEY=*** # For Claude models
-export GOOGLE_API_KEY=***     # For Gemini models
-export GROQ_API_KEY=***       # For Groq models
+### Optional for additional models:
+export OPENAI_API_KEY =***           # for OpenAi models
+export GENAI_API_KEY =***     # for Genai models
+export DEEPSEEK_API_KEY =***  # For Deepseek models
+export GROQ_API_KEY =***       # For Groq models
 
 ### 4. Run the Game
 streamlit run app.py
@@ -74,9 +74,8 @@ The game supports various AI models, including:
 
 - **GPT-4o** (OpenAI)
 - **GPT-o3-mini** (OpenAI)
-- **Gemini** (Google)
 - **Llama 3** (Groq)
-- **Claude** (Anthropic)
+- **Genai 1.03** (Genai)
 
 ## Game Features
 
