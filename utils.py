@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple
 import streamlit as st
 
+
 # Constants for players and empty cells
 X_PLAYER = "X"
 O_PLAYER = "O"
