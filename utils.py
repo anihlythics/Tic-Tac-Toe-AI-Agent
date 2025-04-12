@@ -1,7 +1,6 @@
 from typing import List, Optional, Tuple
 import streamlit as st
 
-
 # Constants for players and empty cells
 X_PLAYER = "X"
 O_PLAYER = "O"
@@ -51,29 +50,3 @@ class TicTacToe:
         if self.is_board_full():
             return "It's a draw!"
         return "Game in progress"
-
-def main():
-    st.title("Tic-Tac-Toe Game")
-    
-    if "game" not in st.session_state:
-        st.session_state.game = TicTacToe()
-    
-    game = st.session_state.game
-    status = game.get_game_status()
-    
-    st.write("Current Player: ", game.current_player)
-    st.write("Status: ", status)
-    
-    for i in range(3):
-        cols = st.columns(3)
-        for j in range(3):
-            if cols[j].button(game.board[i][j], key=f"{i}{j}") and game.board[i][j] == EMPTY:
-                success, msg = game.make_move(i, j)
-                st.experimental_rerun()
-    
-    if st.button("Reset Game"):
-        st.session_state.game = TicTacToe()
-        st.experimental_rerun()
-
-if __name__ == "__main__":
-    main()

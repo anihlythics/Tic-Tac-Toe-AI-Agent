@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   tic-tac-toe:
-    build: .
+    image: your-dockerhub-username/tic-tac-toe-ai:latest
     ports:
       - "8501:8501"
     environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      GENAI_API_KEY: ${GOOGLE_API_KEY}
-      GROQ_API_KEY: ${GROQ_API_KEY}
-      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      GENAI_API_KEY: "${GENAI_API_KEY}"
+      GROQ_API_KEY: "${GROQ_API_KEY}"
+      OPENROUTER_API_KEY: "${OPENROUTER_API_KEY}"
     restart: always

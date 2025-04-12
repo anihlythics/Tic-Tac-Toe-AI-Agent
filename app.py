@@ -1,6 +1,6 @@
 import nest_asyncio
 import streamlit as st
-from game_state import initialize_game, start_new_game
+from game_state import initialize_game, start_new_game, reset_game
 from ui_components import CUSTOM_CSS, render_game_title
 from agents import get_tic_tac_toe_players
 from agno.utils.log import logger
@@ -11,10 +11,8 @@ from utils import (
     show_agent_status,
 )
 
-# Apply asyncio patch
 nest_asyncio.apply()
 
-# Streamlit page configuration
 st.set_page_config(
     page_title="Agent Tic Tac Toe",
     page_icon="🎮",
@@ -22,28 +20,23 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Load custom CSS for styling
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 def main():
     initialize_game()
 
-    # 🎯 Landing Page - Show Welcome Screen First
     if not st.session_state.get("enter_game"):
-        st.image("https://i.imgur.com/Fh7XOmF.png", use_column_width=True)  # Replace with your own hosted logo if needed
-        st.markdown(
-            """
-            ## Welcome to **AI Battle Arena** 🤖🎮
-            Watch top AI agents battle it out in a strategic Tic-Tac-Toe match.
+        st.image("https://i.imgur.com/Fh7XOmF.png", use_column_width=True)
+        st.markdown("""
+        ## Welcome to **AI Battle Arena** 🤖🎮
+        Watch top AI agents battle it out in a strategic Tic-Tac-Toe match.
 
-            - 🔵 Select your AI players
-            - ⚔️ Start a match
-            - 📈 See real-time moves and outcomes
+        - 🔵 Select your AI players
+        - ⚔️ Start a match
+        - 📈 See real-time moves and outcomes
 
-            ---
-            """,
-            unsafe_allow_html=True
-        )
+        ---
+        """, unsafe_allow_html=True)
         if st.button("🚀 Enter the Arena"):
             st.session_state.enter_game = True
             st.rerun()
@@ -51,7 +44,6 @@ def main():
 
     render_game_title()
 
-    # Sidebar - Game Controls
     with st.sidebar:
         st.markdown("### Game Controls")
         model_options = {
@@ -60,7 +52,7 @@ def main():
             "Gemini Flash": "google:gemini-2.0-flash",
             "Gemini Pro": "google:gemini-2.0-pro-exp-02-05",
             "Llama 3.3": "groq:llama-3.3-70b-versatile",
-            "DeepSeek": "deepseek"
+            "Minstral (OpenRouter)": "openrouter:mistral-7b",
         }
 
         selected_p_x = st.selectbox("Select Player X", list(model_options.keys()), index=3, key="model_p1")
@@ -79,6 +71,20 @@ def main():
             if st.session_state.game_started:
                 if st.button("🔄 New Game"):
                     start_new_game(model_options[selected_p_x], model_options[selected_p_o])
+
+        st.markdown("---")
+        if "confirm_reset" not in st.session_state:
+            st.session_state.confirm_reset = False
+
+        if st.session_state.confirm_reset:
+            st.markdown("⚠️ **Are you sure you want to reset everything?**")
+            if st.button("✅ Confirm Reset"):
+                reset_game()
+            if st.button("❌ Cancel"):
+                st.session_state.confirm_reset = False
+        else:
+            if st.button("🧹 Reset All"):
+                st.session_state.confirm_reset = True
 
     if st.session_state.game_started:
         st.markdown(f"<h3 style='color:#87CEEB; text-align:center;'>{selected_p_x} vs {selected_p_o}</h3>", unsafe_allow_html=True)
@@ -101,7 +107,7 @@ def main():
         else:
             current_player = st.session_state.game_board.current_player
             current_model_name = selected_p_x if current_player == "X" else selected_p_o
-            show_agent_status(f"Player ({current_model_name})", "It's your turn")
+            show_agent_status(f"Player {current_player} ({current_model_name})", "is thinking...")
 
             display_move_history()
 

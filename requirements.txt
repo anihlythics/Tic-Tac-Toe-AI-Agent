@@ -81,4 +81,5 @@ tzdata==2025.1  # via pandas
 urllib3==2.3.0  # via requests
 websockets==14.2  # via google-genai
 wheel==0.45.1  # via pip-tools
-deepseek
+openrouter
+uvicorn==0.23.2  # via -r cookbook/examples/apps/tic_tac_toe/requirements.in, agno, streamlit
