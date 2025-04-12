@@ -39,7 +39,7 @@ from agno.agent import Agent
 from agno.models.google import Gemini
 from agno.models.groq import Groq
 from agno.models.openai import OpenAIChat
-from openrouter import OpenRouterChat
+from openrouter_wrapper import OpenRouterChat
 
 # Ensure project root is in the system path
 project_root = Path(__file__).resolve().parents[3] if "__file__" in globals() else Path.cwd()
