@@ -10,7 +10,8 @@ from utils import (
     display_board,
     display_move_history,
     show_agent_status,
-)
+    get_video_base64,
+    )
 
 load_dotenv()
 nest_asyncio.apply()
@@ -21,6 +22,35 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+video_path = "Edt/vecteezy_abstract-round-blue-to-purple-sphere-light-bright-glowing_20056175.mp4"
+video_b64 = get_video_base64(video_path)
+
+video_html = f"""
+<style>
+.stApp {{
+  background: transparent;
+}}
+
+.video-bg {{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+  opacity: 0.35;
+  filter: blur(2px) brightness(1.2);
+}}
+</style>
+
+<video autoplay loop muted playsinline class="video-bg">
+  <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
+</video>
+"""
+
+st.markdown(video_html, unsafe_allow_html=True)
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 

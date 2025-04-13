@@ -1,10 +1,10 @@
 from typing import List, Optional, Tuple
 import streamlit as st
+import base64
 
 X_PLAYER = "X"
 O_PLAYER = "O"
 EMPTY = " "
-
 class TicTacToe:
     def __init__(self):
         self.board = [[EMPTY for _ in range(3)] for _ in range(3)]
@@ -74,6 +74,11 @@ def display_move_history():
     st.markdown("### Move History")
     for move in st.session_state.move_history:
         st.markdown(f"- {move['player']} moved to **{move['move']}**")
+
+def get_video_base64(path):
+    with open(path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
 
 def show_agent_status(name: str, message: str):
     st.info(f"**{name}**: {message}")
