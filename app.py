@@ -5,7 +5,7 @@ from ui_components import CUSTOM_CSS, render_game_title
 from agents import get_tic_tac_toe_players
 from agno.utils.log import logger
 from utils import (
-    TicTacToeBoard,
+    TicTacToe,
     display_board,
     display_move_history,
     show_agent_status,
@@ -52,7 +52,7 @@ def main():
             "Gemini Flash": "google:gemini-2.0-flash",
             "Gemini Pro": "google:gemini-2.0-pro-exp-02-05",
             "Llama 3.3": "groq:llama-3.3-70b-versatile",
-            "Minstral (OpenRouter)": "openrouter:mistral-7b",
+            "Mistral (OpenRouter)": "openrouter:mistral-7b",
         }
 
         selected_p_x = st.selectbox("Select Player X", list(model_options.keys()), index=3, key="model_p1")
