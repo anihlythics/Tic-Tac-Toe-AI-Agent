@@ -1,4 +1,6 @@
 import nest_asyncio
+import os
+import sys
 import streamlit as st
 from dotenv import load_dotenv  # type: ignore
 from game_state import initialize_game, start_new_game, reset_game
@@ -24,6 +26,8 @@ st.set_page_config(
 )
 
 video_path = "Edt/vecteezy_abstract-round-blue-to-purple-sphere-light-bright-glowing_20056175.mp4"
+if os.path.exists(video_path):
+    video_b64 = get_video_base64(video_path)
 video_b64 = get_video_base64(video_path)
 
 video_html = f"""
