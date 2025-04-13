@@ -1,5 +1,6 @@
 import nest_asyncio
 import streamlit as st
+from dotenv import load_dotenv  # type: ignore
 from game_state import initialize_game, start_new_game, reset_game
 from ui_components import CUSTOM_CSS, render_game_title
 from agents import get_tic_tac_toe_players
@@ -11,6 +12,7 @@ from utils import (
     show_agent_status,
 )
 
+load_dotenv()
 nest_asyncio.apply()
 
 st.set_page_config(
