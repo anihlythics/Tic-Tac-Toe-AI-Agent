@@ -48,13 +48,13 @@ if str(project_root) not in sys.path:
 
 def get_model_for_provider(provider: str, model_name: str):
     if provider == "openai":
-        return OpenAIChat(id=model_name)
+        return OpenAIChat(id=model_name, api_key=openai_key)
     elif provider == "google":
-        return Gemini(id=model_name)
+        return Gemini(id=model_name, api_key=genai_key)
     elif provider == "groq":
-        return Groq(id=model_name)
+        return Groq(id=model_name, api_key=groq_key)
     elif provider == "openrouter":
-        return OpenRouterChat(id=model_name)
+        return OpenRouterChat(id=model_name, api_key=openrouter_key)
     else:
         raise ValueError(
             f"Unsupported model provider: {provider}. Available providers: openai, google, openrouter, groq."
