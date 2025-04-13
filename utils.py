@@ -9,6 +9,7 @@ class TicTacToe:
     def __init__(self):
         self.board = [[EMPTY for _ in range(3)] for _ in range(3)]
         self.current_player = X_PLAYER
+        self.last_move = None  # Store last move for animation
 
     def make_move(self, row: int, col: int) -> Tuple[bool, str]:
         if not (0 <= row < 3 and 0 <= col < 3):
@@ -17,8 +18,12 @@ class TicTacToe:
             return False, "Invalid move: Position already occupied."
 
         self.board[row][col] = self.current_player
+        self.last_move = (row, col)
         self.current_player = O_PLAYER if self.current_player == X_PLAYER else X_PLAYER
         return True, "Move successful!"
+
+    def get_valid_moves(self) -> List[Tuple[int, int]]:
+        return [(i, j) for i in range(3) for j in range(3) if self.board[i][j] == EMPTY]
 
     def get_board_state(self) -> str:
         return "\n".join([" | ".join(row) for row in self.board])
@@ -57,10 +62,12 @@ def display_board(game: TicTacToe):
         cols = st.columns(3)
         for j in range(3):
             cell = game.board[i][j]
+            highlight = game.last_move == (i, j)
             cols[j].button(
                 label=cell if cell != EMPTY else " ",
                 key=f"cell-{i}-{j}",
-                disabled=True
+                disabled=True,
+                help="Last move" if highlight else None
             )
 
 def display_move_history():

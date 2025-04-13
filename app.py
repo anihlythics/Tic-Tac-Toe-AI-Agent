@@ -25,8 +25,13 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 def main():
     initialize_game()
 
+    if "score_x" not in st.session_state:
+        st.session_state.score_x = 0
+    if "score_o" not in st.session_state:
+        st.session_state.score_o = 0
+
     if not st.session_state.get("enter_game"):
-        st.image("https://i.imgur.com/Fh7XOmF.png", use_column_width=True)
+        st.image("https://i.imgur.com/Fh7XOmF.png", use_container_width=True)
         st.markdown("""
         ## Welcome to **AI Battle Arena** 🤖🎮
         Watch top AI agents battle it out in a strategic Tic-Tac-Toe match.
@@ -73,6 +78,8 @@ def main():
                     start_new_game(model_options[selected_p_x], model_options[selected_p_o])
 
         st.markdown("---")
+        st.markdown(f"### 🧠 Scoreboard\n- 🔵 Player X: `{st.session_state.score_x}`\n- 🔴 Player O: `{st.session_state.score_o}`")
+
         if "confirm_reset" not in st.session_state:
             st.session_state.confirm_reset = False
 
@@ -88,16 +95,21 @@ def main():
 
     if st.session_state.game_started:
         st.markdown(f"<h3 style='color:#87CEEB; text-align:center;'>{selected_p_x} vs {selected_p_o}</h3>", unsafe_allow_html=True)
-        game_over, status = st.session_state.game_board.get_game_state()
+        status = st.session_state.game_board.get_game_status()
+        game_over = "wins" in status.lower() or "draw" in status.lower()
         display_board(st.session_state.game_board)
 
         if game_over:
             winner_player = "X" if "X wins" in status else "O" if "O wins" in status else None
             if winner_player:
                 winner_model = selected_p_x if winner_player == "X" else selected_p_o
+                st.session_state.score_x += 1 if winner_player == "X" else 0
+                st.session_state.score_o += 1 if winner_player == "O" else 0
                 st.success(f"🏆 Game Over! {winner_model} wins!")
             else:
                 st.info("🤝 Game Over! It's a draw!")
+
+            st.balloons()
 
             with st.sidebar:
                 st.markdown("### Replay Options")
@@ -111,7 +123,7 @@ def main():
 
             display_move_history()
 
-            if not st.session_state.game_paused and not game_over:
+            if not st.session_state.game_paused:
                 valid_moves = st.session_state.game_board.get_valid_moves()
                 current_agent = st.session_state.player_x if current_player == "X" else st.session_state.player_o
 
