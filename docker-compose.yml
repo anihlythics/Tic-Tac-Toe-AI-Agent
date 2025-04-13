@@ -2,9 +2,10 @@ version: "3.8"
 
 services:
   tic-tac-toe:
-    image: your-dockerhub-username/tic-tac-toe-ai:latest
+    image: anihlythics/tic-tac-toe-ai:latest  # ✅ update with your real Docker Hub username
     ports:
       - "8501:8501"
+    env_file: .env  # ✅ This tells Docker Compose to load your .env file
     environment:
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
       GENAI_API_KEY: "${GENAI_API_KEY}"
