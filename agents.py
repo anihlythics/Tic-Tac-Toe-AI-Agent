@@ -42,7 +42,7 @@ from agno.models.openai import OpenAIChat
 from openrouter_wrapper import OpenRouterChat
 
 # Ensure project root is in the system path
-project_root = Path(__file__).resolve().parents[3] if "__file__" in globals() else Path.cwd()
+project_root = Path(__file__).resolve().parents
 if str(project_root) not in sys.path:
     sys.path.append(str(project_root))
 
