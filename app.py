@@ -58,7 +58,8 @@ if os.path.exists(video_path):
     """, unsafe_allow_html=True)
 
 # ✅ Initialize session state
-initialize_game()
+def main():
+    initialize_game()
 if "score_x" not in st.session_state:
     st.session_state.score_x = 0
 if "score_o" not in st.session_state:
