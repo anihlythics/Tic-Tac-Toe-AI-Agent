@@ -60,16 +60,6 @@ if os.path.exists(video_path):
 # ✅ Initialize session state
 def main():
     initialize_game()
-if "score_x" not in st.session_state:
-    st.session_state.score_x = 0
-if "score_o" not in st.session_state:
-    st.session_state.score_o = 0
-if "theme_choice" not in st.session_state:
-    st.session_state.theme_choice = "Glow"
-if "grid_opacity" not in st.session_state:
-    st.session_state.grid_opacity = 0.15
-if "sound_enabled" not in st.session_state:
-    st.session_state.sound_enabled = True
 
 # 🌌 Apply dynamic theme CSS
 if st.session_state.theme_choice == "Glow":
