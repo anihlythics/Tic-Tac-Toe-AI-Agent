@@ -29,6 +29,14 @@ from typing import Tuple
 import openai  # OpenAI integration
 import google.generativeai as genai  # Google Gemini integration
 
+load_dotenv()
+
+# ✅ Defining all keys
+openai_key = os.getenv("OPENAI_API_KEY")
+genai_key = os.getenv("GENAI_API_KEY")
+groq_key = os.getenv("GROQ_API_KEY")
+openrouter_key = os.getenv("OPENROUTER_API_KEY")
+
 # Set API keys
 openai.api_key = os.getenv("OPENAI_API_KEY")
 genai_api_key = os.getenv("GENAI_API_KEY")
